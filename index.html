@@ -2,47 +2,315 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zephron</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .card {
-      text-align: center;
-      background: #161b22;
-      padding: 2rem 3rem;
-      border-radius: 12px;
-      border: 1px solid #30363d;
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
     }
-    a.button {
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: #888;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .download-btn {
       display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: #238636;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.15rem;
+      margin-bottom: 50px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
     }
-    a.button:hover {
-      background: #2ea043;
+
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6);
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .features-box {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 520px;
+      height: 500px;
+      overflow-y: auto;
+    }
+
+    .features-box h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #fff;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+
+    .category {
+      margin-bottom: 22px;
+    }
+
+    .category-title {
+      color: #a855f7;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding-left: 12px;
+    }
+
+    .feature-list li {
+      padding: 4px 0;
+      color: #ccc;
+      font-size: 0.95rem;
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .feature-list li::before {
+      content: "•";
+      color: #ec4899;
+      position: absolute;
+      left: 0;
+    }
+
+    /* Scrollbar */
+    .features-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .features-box::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 4px;
+    }
+    .features-box::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+    .features-box::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
+
+    .discord-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .discord-section h2 {
+      margin-bottom: 16px;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    iframe {
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: #555;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Zephron</h1>
-    <p>Download the latest build below.</p>
-    <a class="button" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>
-      Download Zephron.dll
-    </a>
+  <h1>ZEPHRON</h1>
+  <p class="subtitle">Premium Rec Room Tool</p>
+
+  <a class="download-btn" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>
+    Download Zephron.dll
+  </a>
+
+  <div class="container">
+    <!-- Features Box -->
+    <div class="features-box">
+      <h2>Features</h2>
+
+      <div class="category">
+        <div class="category-title">Combat</div>
+        <ul class="feature-list">
+          <li>Loop Fire</li>
+          <li>No Recoil</li>
+          <li>Extra Bullets</li>
+          <li>No Cooldown</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Movement</div>
+        <ul class="feature-list">
+          <li>Static Fly</li>
+          <li>Dynamic Fly</li>
+          <li>Walk Speed</li>
+          <li>Jump Height</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Visuals</div>
+        <ul class="feature-list">
+          <li>Custom FOV</li>
+          <li>ESP (Skeleton, 2D Box, 3D Box, Tracer, Nametag, Visibility Check, Show Self, Distance, Ping, Actor ID, Tracer Origin, Nametag Anchor, Skeleton Outline, Nametag Background/Outline/Text Only, colors)</li>
+          <li>Radial Wheel (custom skin, size, spacing, colors)</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Exploits</div>
+        <ul class="feature-list">
+          <li>Set Master</li>
+          <li>Force Master</li>
+          <li>Void All</li>
+          <li>Grab All</li>
+          <li>RAM Crash All</li>
+          <li>Respawn All</li>
+          <li>Despawn All</li>
+          <li>Spawn All</li>
+          <li>Drop Tools All</li>
+          <li>Friend All</li>
+          <li>Cheer All</li>
+          <li>Level All</li>
+          <li>Vanish</li>
+          <li>Gas All</li>
+          <li>Local Developer</li>
+          <li>Local RR+</li>
+          <li>Local Moderator</li>
+          <li>Own Room Keys</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Anti-Exploits</div>
+        <ul class="feature-list">
+          <li>Anti-Droptools</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Misc</div>
+        <ul class="feature-list">
+          <li>Anti-Crash</li>
+          <li>No Rate-Limits</li>
+          <li>SSL Bypass</li>
+          <li>Broadcasting</li>
+          <li>Send Notification</li>
+          <li>Send Chat Message</li>
+          <li>Shrink All</li>
+          <li>Freeze All / Unfreeze All</li>
+          <li>Set Grabbable All / Ungrab All</li>
+          <li>Delete Creation Objects</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Assets Spawn</div>
+        <ul class="feature-list">
+          <li>Spawn Asset</li>
+          <li>Random Scale</li>
+          <li>Random Rotation</li>
+          <li>Custom Vectors</li>
+          <li>Force Equip</li>
+          <li>Blame Transfer</li>
+          <li>Additional Spawns</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Player List</div>
+        <ul class="feature-list">
+          <li>Void</li>
+          <li>Grab</li>
+          <li>Teleport</li>
+          <li>RAM Crash</li>
+          <li>Sync/Desync</li>
+          <li>Respawn</li>
+          <li>Despawn</li>
+          <li>Spawn</li>
+          <li>Delete</li>
+          <li>Jedi</li>
+          <li>Drop Tools</li>
+          <li>Friend</li>
+          <li>Fake Vote-Kick</li>
+          <li>Disconnect</li>
+          <li>Cheer</li>
+          <li>Level</li>
+          <li>Cheer Crash</li>
+          <li>Promote</li>
+          <li>Notify</li>
+          <li>Chat</li>
+        </ul>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Config System</div>
+        <ul class="feature-list">
+          <li>Save Config</li>
+          <li>Load Config</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Discord Embed -->
+    <div class="discord-section">
+      <h2>Join YEEZY</h2>
+      <iframe 
+        src="https://discord.com/widget?id=1389805726079123536&theme=dark" 
+        width="350" 
+        height="500" 
+        allowtransparency="true" 
+        frameborder="0" 
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
+    </div>
   </div>
+
+  <footer>
+    Zephron • Not affiliated with Rec Room
+  </footer>
 </body>
 </html>
