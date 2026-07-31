@@ -10,10 +10,9 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background: #0a0a0a;
-      background-image: 
+      background-image:
         radial-gradient(ellipse at 20% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.10) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 50%, rgba(30, 10, 40, 0.4) 0%, transparent 70%);
@@ -26,7 +25,6 @@
       padding: 50px 20px 40px;
       overflow-x: hidden;
     }
-
     /* Logo */
     .logo-wrapper {
       position: relative;
@@ -34,7 +32,6 @@
       display: flex;
       justify-content: center;
     }
-
     .logo {
       width: 140px;
       height: 140px;
@@ -45,18 +42,15 @@
                   filter 0.4s ease;
       animation: logoFloat 4s ease-in-out infinite;
     }
-
     .logo:hover {
       transform: scale(1.12) rotate(3deg);
       filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.95))
               drop-shadow(0 0 60px rgba(236, 72, 153, 0.65));
     }
-
     @keyframes logoFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
-
     h1 {
       font-size: 3.4rem;
       font-weight: 800;
@@ -70,12 +64,10 @@
       animation: gradientShift 5s linear infinite;
       text-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
     }
-
     @keyframes gradientShift {
       0% { background-position: 0% center; }
       100% { background-position: 200% center; }
     }
-
     .subtitle {
       color: #999;
       margin-bottom: 36px;
@@ -83,7 +75,6 @@
       letter-spacing: 1px;
       font-weight: 400;
     }
-
     /* Download Button */
     .download-btn {
       position: relative;
@@ -97,20 +88,19 @@
       border-radius: 14px;
       font-weight: 700;
       font-size: 1.2rem;
-      margin-bottom: 55px;
+      margin-bottom: 40px;
       letter-spacing: 0.5px;
-      box-shadow: 
+      box-shadow:
         0 0 0 0 rgba(168, 85, 247, 0.5),
         0 8px 25px rgba(168, 85, 247, 0.45),
         0 4px 12px rgba(0, 0, 0, 0.4);
-      transition: 
+      transition:
         transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
         box-shadow 0.3s ease,
         filter 0.3s ease;
       overflow: hidden;
       z-index: 1;
     }
-
     .download-btn::before {
       content: "";
       position: absolute;
@@ -120,22 +110,119 @@
       transition: opacity 0.3s ease;
       z-index: -1;
     }
-
     .download-btn:hover {
       transform: translateY(-6px) scale(1.05);
-      box-shadow: 
+      box-shadow:
         0 0 30px 8px rgba(168, 85, 247, 0.55),
         0 0 60px 15px rgba(236, 72, 153, 0.35),
         0 12px 30px rgba(0, 0, 0, 0.5);
       filter: brightness(1.1);
     }
-
     .download-btn:hover::before {
       opacity: 1;
     }
-
     .download-btn:active {
       transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ===== UPDATE BOX ===== */
+    .update-box {
+      background: rgba(18, 18, 22, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 18px;
+      padding: 26px 28px;
+      width: 100%;
+      max-width: 700px;
+      margin-bottom: 45px;
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .update-box:hover {
+      border-color: rgba(168, 85, 247, 0.5);
+      box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(168, 85, 247, 0.18);
+    }
+    .update-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.25);
+      padding-bottom: 14px;
+    }
+    .update-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    .update-date {
+      color: #888;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    .update-sections {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .update-col {
+      flex: 1;
+      min-width: 240px;
+    }
+    .update-col h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .added-title {
+      color: #4ade80;
+      text-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+    }
+    .removed-title {
+      color: #f87171;
+      text-shadow: 0 0 12px rgba(248, 113, 113, 0.4);
+    }
+    .update-list {
+      list-style: none;
+    }
+    .update-list li {
+      padding: 7px 0;
+      font-size: 0.97rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #ccc;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .update-list li:hover {
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .plus {
+      color: #4ade80;
+      font-weight: 800;
+      font-size: 1.15rem;
+      line-height: 1.1;
+      text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+      flex-shrink: 0;
+    }
+    .minus {
+      color: #f87171;
+      font-weight: 800;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+      flex-shrink: 0;
     }
 
     /* Layout */
@@ -147,7 +234,6 @@
       max-width: 1140px;
       width: 100%;
     }
-
     /* Features Card */
     .features-box {
       background: rgba(18, 18, 22, 0.85);
@@ -159,19 +245,17 @@
       max-width: 540px;
       height: 520px;
       overflow-y: auto;
-      box-shadow: 
+      box-shadow:
         0 10px 40px rgba(0, 0, 0, 0.5),
         0 0 0 1px rgba(255, 255, 255, 0.03) inset;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-
     .features-box:hover {
       border-color: rgba(168, 85, 247, 0.45);
-      box-shadow: 
+      box-shadow:
         0 15px 50px rgba(0, 0, 0, 0.6),
         0 0 30px rgba(168, 85, 247, 0.15);
     }
-
     .features-box h2 {
       font-size: 1.5rem;
       margin-bottom: 22px;
@@ -180,11 +264,9 @@
       padding-bottom: 12px;
       letter-spacing: 1px;
     }
-
     .category {
       margin-bottom: 24px;
     }
-
     .category-title {
       color: #c084fc;
       font-weight: 700;
@@ -196,7 +278,6 @@
       align-items: center;
       gap: 8px;
     }
-
     .category-title::before {
       content: "";
       width: 6px;
@@ -205,12 +286,10 @@
       border-radius: 50%;
       box-shadow: 0 0 8px #ec4899;
     }
-
     .feature-list {
       list-style: none;
       padding-left: 14px;
     }
-
     .feature-list li {
       padding: 5px 0;
       color: #c8c8c8;
@@ -219,12 +298,10 @@
       padding-left: 18px;
       transition: color 0.2s ease, transform 0.2s ease;
     }
-
     .feature-list li:hover {
       color: #fff;
       transform: translateX(4px);
     }
-
     .feature-list li::before {
       content: "▸";
       color: #ec4899;
@@ -233,7 +310,6 @@
       font-size: 0.85rem;
       top: 5px;
     }
-
     /* Scrollbar */
     .features-box::-webkit-scrollbar {
       width: 7px;
@@ -249,34 +325,29 @@
     .features-box::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(180deg, #c084fc, #f472b6);
     }
-
     /* Discord section */
     .discord-section {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     .discord-section h2 {
       margin-bottom: 18px;
       font-size: 1.45rem;
       color: #fff;
       letter-spacing: 1px;
     }
-
     iframe {
       border-radius: 16px;
       border: 1px solid rgba(168, 85, 247, 0.3);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
       transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     }
-
     iframe:hover {
       border-color: rgba(168, 85, 247, 0.55);
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(168, 85, 247, 0.2);
       transform: translateY(-4px);
     }
-
     footer {
       margin-top: 70px;
       color: #555;
@@ -284,28 +355,25 @@
       letter-spacing: 1px;
       text-align: center;
     }
-
     footer span {
       background: linear-gradient(90deg, #a855f7, #ec4899);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 600;
     }
-
     /* Responsive */
     @media (max-width: 900px) {
       h1 { font-size: 2.6rem; }
       .logo { width: 110px; height: 110px; }
       .features-box { height: auto; max-height: 480px; }
+      .update-sections { flex-direction: column; gap: 20px; }
     }
   </style>
 </head>
 <body>
-
   <div class="logo-wrapper">
     <img src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron Logo" class="logo">
   </div>
-
   <h1>ZEPHRON</h1>
   <p class="subtitle">Universal Rec Room Tool</p>
 
@@ -313,11 +381,39 @@
     Download Zephron.dll
   </a>
 
+  <!-- UPDATE SECTION -->
+  <div class="update-box">
+    <div class="update-header">
+      <div class="update-title">ZEPHRON UPDATE</div>
+      <div class="update-date">Thursday, July 30, 2026 • 9:21 PM</div>
+    </div>
+
+    <div class="update-sections">
+      <!-- ADDED -->
+      <div class="update-col">
+        <h3 class="added-title">Added</h3>
+        <ul class="update-list">
+          <li><span class="plus">+</span> New Gui Look (Haze Client)</li>
+          <li><span class="plus">+</span> New Background Effect</li>
+          <li><span class="plus">+</span> Credits Page</li>
+          <li><span class="plus">+</span> Tabs Positions / Sizes Can Be Saved In Config</li>
+        </ul>
+      </div>
+
+      <!-- REMOVED -->
+      <div class="update-col">
+        <h3 class="removed-title">Removed</h3>
+        <ul class="update-list">
+          <li><span class="minus">−</span> Old Background Effect</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <!-- Features Box -->
     <div class="features-box">
       <h2>Features</h2>
-
       <div class="category">
         <div class="category-title">Combat</div>
         <ul class="feature-list">
@@ -327,7 +423,6 @@
           <li>No Cooldown</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Movement</div>
         <ul class="feature-list">
@@ -337,7 +432,6 @@
           <li>Jump Height</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Visuals</div>
         <ul class="feature-list">
@@ -346,7 +440,6 @@
           <li>Radial Wheel (custom skin, size, spacing, colors)</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Exploits</div>
         <ul class="feature-list">
@@ -370,14 +463,12 @@
           <li>Own Room Keys</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Anti-Exploits</div>
         <ul class="feature-list">
           <li>Anti-Droptools</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Misc</div>
         <ul class="feature-list">
@@ -393,7 +484,6 @@
           <li>Delete Creation Objects</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Assets Spawn</div>
         <ul class="feature-list">
@@ -406,7 +496,6 @@
           <li>Additional Spawns</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Player List</div>
         <ul class="feature-list">
@@ -432,7 +521,6 @@
           <li>Chat</li>
         </ul>
       </div>
-
       <div class="category">
         <div class="category-title">Config System</div>
         <ul class="feature-list">
@@ -459,6 +547,5 @@
   <footer>
     <span>Zephron</span> • Universal RecRoom Cheeto
   </footer>
-
 </body>
 </html>
