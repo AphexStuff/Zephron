@@ -4,546 +4,551 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zephron</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://aphextwinsymbol.neocities.org/Zephron.png" type="image/png">
+  <link rel="apple-touch-icon" href="https://aphextwinsymbol.neocities.org/Zephron.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #030208;
+      --panel: #0a0810;
+      --border: #1f1830;
+      --text: #e2dcf0;
+      --muted: #7a7190;
+      --neon: #c084fc;
+      --hot: #f472b6;
+      --green: #4ade80;
+      --red: #f87171;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      background: #0a0a0a;
-      background-image:
-        radial-gradient(ellipse at 20% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.10) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(30, 10, 40, 0.4) 0%, transparent 70%);
-      color: #e0e0e0;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 50px 20px 40px;
       overflow-x: hidden;
-    }
-    /* Logo */
-    .logo-wrapper {
       position: relative;
-      margin-bottom: 18px;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url('https://aphextwinsymbol.neocities.org/Zephron.png');
+      background-repeat: repeat;
+      background-size: 160px 160px;
+      opacity: 0.03;
+      transform: rotate(-12deg) scale(1.4);
+      animation: drift 40s linear infinite;
+      filter: grayscale(0.3) brightness(1.3);
+    }
+    @keyframes drift {
+      from { background-position: 0 0; }
+      to   { background-position: -160px 160px; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(192,132,252,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192,132,252,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
     }
-    .logo {
-      width: 140px;
-      height: 140px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
       object-fit: contain;
-      filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.7))
-              drop-shadow(0 0 40px rgba(236, 72, 153, 0.4));
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  filter 0.4s ease;
-      animation: logoFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px rgba(192,132,252,0.7));
     }
-    .logo:hover {
-      transform: scale(1.12) rotate(3deg);
-      filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.95))
-              drop-shadow(0 0 60px rgba(236, 72, 153, 0.65));
-    }
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    h1 {
-      font-size: 3.4rem;
-      font-weight: 800;
-      letter-spacing: 6px;
-      margin-bottom: 6px;
+
+    .brand-text {
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       background: linear-gradient(90deg, #c084fc, #f472b6, #c084fc);
       background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: gradientShift 5s linear infinite;
-      text-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+      animation: gradientMove 4s linear infinite;
     }
-    @keyframes gradientShift {
-      0% { background-position: 0% center; }
-      100% { background-position: 200% center; }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .subtitle {
-      color: #999;
-      margin-bottom: 36px;
-      font-size: 1.15rem;
-      letter-spacing: 1px;
-      font-weight: 400;
-    }
-    /* Download Button */
-    .download-btn {
-      position: relative;
+
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: linear-gradient(90deg, #a855f7, #ec4899);
-      color: white;
-      text-decoration: none;
-      padding: 18px 48px;
-      border-radius: 14px;
+      gap: 8px;
+      padding: 11px 20px;
+      font-size: 0.9rem;
       font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 40px;
-      letter-spacing: 0.5px;
-      box-shadow:
-        0 0 0 0 rgba(168, 85, 247, 0.5),
-        0 8px 25px rgba(168, 85, 247, 0.45),
-        0 4px 12px rgba(0, 0, 0, 0.4);
-      transition:
-        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.3s ease,
-        filter 0.3s ease;
-      overflow: hidden;
-      z-index: 1;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.2s ease;
+      letter-spacing: 0.3px;
     }
-    .download-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #c084fc, #f472b6);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
+
+    .btn-dl {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(168,85,247,0.35);
     }
-    .download-btn:hover {
-      transform: translateY(-6px) scale(1.05);
-      box-shadow:
-        0 0 30px 8px rgba(168, 85, 247, 0.55),
-        0 0 60px 15px rgba(236, 72, 153, 0.35),
-        0 12px 30px rgba(0, 0, 0, 0.5);
+    .btn-dl:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 32px rgba(168,85,247,0.55);
       filter: brightness(1.1);
     }
-    .download-btn:hover::before {
-      opacity: 1;
+
+    .btn-dc {
+      background: transparent;
+      color: #c4b5fd;
+      border: 1px solid #5b21b6;
     }
-    .download-btn:active {
-      transform: translateY(-2px) scale(1.02);
+    .btn-dc:hover {
+      background: rgba(91,33,182,0.25);
+      border-color: #a855f7;
+      color: #fff;
     }
 
-    /* ===== UPDATE BOX ===== */
-    .update-box {
-      background: rgba(18, 18, 22, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 18px;
-      padding: 26px 28px;
-      width: 100%;
-      max-width: 700px;
-      margin-bottom: 45px;
-      box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    .btn-dc svg { width: 16px; height: 16px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
     }
-    .update-box:hover {
-      border-color: rgba(168, 85, 247, 0.5);
-      box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.6),
-        0 0 30px rgba(168, 85, 247, 0.18);
+
+    .hero-logo {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 0 28px rgba(192,132,252,0.8));
+      animation: pulse 3.5s ease-in-out infinite;
     }
-    .update-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(168, 85, 247, 0.25);
-      padding-bottom: 14px;
+    @keyframes pulse {
+      0%,100% { filter: drop-shadow(0 0 22px rgba(192,132,252,0.7)); transform: scale(1); }
+      50%     { filter: drop-shadow(0 0 40px rgba(244,114,182,0.6)); transform: scale(1.04); }
     }
-    .update-title {
-      font-size: 1.45rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, #c084fc, #f472b6);
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #c084fc, #f472b6, #e879f9, #c084fc);
+      background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-    }
-    .update-date {
-      color: #888;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-    }
-    .update-sections {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    .update-col {
-      flex: 1;
-      min-width: 240px;
-    }
-    .update-col h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .added-title {
-      color: #4ade80;
-      text-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-    }
-    .removed-title {
-      color: #f87171;
-      text-shadow: 0 0 12px rgba(248, 113, 113, 0.4);
-    }
-    .update-list {
-      list-style: none;
-    }
-    .update-list li {
-      padding: 7px 0;
-      font-size: 0.97rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: #ccc;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-    .update-list li:hover {
-      color: #fff;
-      transform: translateX(4px);
-    }
-    .plus {
-      color: #4ade80;
-      font-weight: 800;
-      font-size: 1.15rem;
-      line-height: 1.1;
-      text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
-      flex-shrink: 0;
-    }
-    .minus {
-      color: #f87171;
-      font-weight: 800;
-      font-size: 1.25rem;
-      line-height: 1;
-      text-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
-      flex-shrink: 0;
+      background-clip: text;
+      animation: gradientMove 5s linear infinite;
     }
 
-    /* Layout */
-    .container {
-      display: flex;
-      gap: 36px;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 1140px;
-      width: 100%;
+    @keyframes gradientMove {
+      0%   { background-position: 0% center; }
+      100% { background-position: 300% center; }
     }
-    /* Features Card */
-    .features-box {
-      background: rgba(18, 18, 22, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 18px;
-      padding: 28px 26px;
-      width: 100%;
-      max-width: 540px;
-      height: 520px;
-      overflow-y: auto;
-      box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .features-box:hover {
-      border-color: rgba(168, 85, 247, 0.45);
-      box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.6),
-        0 0 30px rgba(168, 85, 247, 0.15);
-    }
-    .features-box h2 {
-      font-size: 1.5rem;
-      margin-bottom: 22px;
-      color: #fff;
-      border-bottom: 1px solid rgba(168, 85, 247, 0.3);
-      padding-bottom: 12px;
-      letter-spacing: 1px;
-    }
-    .category {
-      margin-bottom: 24px;
-    }
-    .category-title {
-      color: #c084fc;
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 9px;
+
+    .hero p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--muted);
+      letter-spacing: 2px;
       text-transform: uppercase;
+    }
+
+    /* ===== CHANGELOG ===== */
+    .changelog {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--neon);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .changelog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .changelog-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--neon);
+      text-transform: uppercase;
+    }
+
+    .changelog-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .cl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 580px) {
+      .cl-grid { grid-template-columns: 1fr; }
+    }
+
+    .cl-section h3 {
+      font-size: 0.75rem;
       letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cl-section.added h3 { color: var(--green); }
+    .cl-section.removed h3 { color: var(--red); }
+
+    .cl-section ul { list-style: none; }
+    .cl-section li {
+      font-size: 0.82rem;
+      padding: 4px 0;
+      color: #c5bdd4;
+      display: flex;
+      gap: 8px;
+    }
+    .cl-section li span { font-weight: 700; flex-shrink: 0; }
+    .plus { color: var(--green); }
+    .minus { color: var(--red); }
+
+    /* ===== FEATURES ===== */
+    .features-wrap {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .features-header {
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .features-header h2 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .features-body {
+      max-height: 520px;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .features-body::-webkit-scrollbar { width: 5px; }
+    .features-body::-webkit-scrollbar-track { background: transparent; }
+    .features-body::-webkit-scrollbar-thumb { background: #3b2d5c; border-radius: 3px; }
+
+    .cat {
+      padding: 14px 22px 6px;
+    }
+
+    .cat-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--hot);
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .category-title::before {
+    .cat-name::before {
       content: "";
       width: 6px;
       height: 6px;
-      background: #ec4899;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #ec4899;
+      background: var(--hot);
+      box-shadow: 0 0 8px var(--hot);
     }
-    .feature-list {
+
+    .cat ul {
       list-style: none;
-      padding-left: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2px 16px;
     }
-    .feature-list li {
-      padding: 5px 0;
-      color: #c8c8c8;
-      font-size: 0.95rem;
-      position: relative;
-      padding-left: 18px;
-      transition: color 0.2s ease, transform 0.2s ease;
+
+    .cat li {
+      font-size: 0.88rem;
+      color: #b8b0c8;
+      padding: 3px 0;
+      transition: color 0.15s;
     }
-    .feature-list li:hover {
-      color: #fff;
-      transform: translateX(4px);
+    .cat li:hover { color: #fff; }
+
+    .cat li.full {
+      grid-column: 1 / -1;
+      line-height: 1.45;
     }
-    .feature-list li::before {
-      content: "▸";
-      color: #ec4899;
-      position: absolute;
-      left: 0;
-      font-size: 0.85rem;
-      top: 5px;
-    }
-    /* Scrollbar */
-    .features-box::-webkit-scrollbar {
-      width: 7px;
-    }
-    .features-box::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 4px;
-    }
-    .features-box::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #a855f7, #ec4899);
-      border-radius: 4px;
-    }
-    .features-box::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, #c084fc, #f472b6);
-    }
-    /* Discord section */
-    .discord-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .discord-section h2 {
-      margin-bottom: 18px;
-      font-size: 1.45rem;
-      color: #fff;
-      letter-spacing: 1px;
-    }
-    iframe {
-      border-radius: 16px;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    iframe:hover {
-      border-color: rgba(168, 85, 247, 0.55);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(168, 85, 247, 0.2);
-      transform: translateY(-4px);
-    }
+
     footer {
-      margin-top: 70px;
-      color: #555;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      margin-top: 48px;
       text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #4a4458;
+      letter-spacing: 1px;
     }
-    footer span {
-      background: linear-gradient(90deg, #a855f7, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    footer strong {
+      color: var(--neon);
       font-weight: 600;
     }
-    /* Responsive */
-    @media (max-width: 900px) {
-      h1 { font-size: 2.6rem; }
-      .logo { width: 110px; height: 110px; }
-      .features-box { height: auto; max-height: 480px; }
-      .update-sections { flex-direction: column; gap: 20px; }
+
+    @media (max-width: 640px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .top-actions { width: 100%; }
+      .btn { flex: 1; justify-content: center; }
+      .hero-logo { width: 88px; height: 88px; }
     }
   </style>
 </head>
 <body>
-  <div class="logo-wrapper">
-    <img src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron Logo" class="logo">
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="page">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="brand">
+        <img src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron">
+        <div class="brand-text">Zephron</div>
+      </div>
+      <div class="top-actions">
+        <a class="btn btn-dl" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>
+          Download DLL
+        </a>
+        <a class="btn btn-dc" href="https://discord.gg/72X3cGQtHu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.102 18.08.114 18.1.129 18.11a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Discord
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <img class="hero-logo" src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron">
+      <h1>Zephron</h1>
+      <p>Universal Rec Room Cheat</p>
+    </section>
+
+    <!-- CHANGELOG -->
+    <section class="changelog">
+      <div class="changelog-header">
+        <div class="changelog-title">// Latest Update</div>
+        <div class="changelog-date">Sat Aug 1, 2026 · 8:40 PM</div>
+      </div>
+      <div class="cl-grid">
+        <div class="cl-section added">
+          <h3>Added</h3>
+          <ul>
+            <li><span class="plus">+</span> Custom Zephron Cursor</li>
+            <li><span class="plus">+</span> Menu fixes & improvements</li>
+          </ul>
+        </div>
+        <div class="cl-section removed">
+          <h3>Removed</h3>
+          <ul>
+            <li><span class="minus">−</span> N/A</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-wrap">
+      <div class="features-header">
+        <h2>Feature List</h2>
+      </div>
+      <div class="features-body">
+
+        <div class="cat">
+          <div class="cat-name">Combat</div>
+          <ul>
+            <li>Loop Fire</li>
+            <li>No Recoil</li>
+            <li>Extra Bullets</li>
+            <li>No Cooldown</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Movement</div>
+          <ul>
+            <li>Static Fly</li>
+            <li>Dynamic Fly</li>
+            <li>Walk Speed</li>
+            <li>Jump Height</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Visuals</div>
+          <ul>
+            <li>Custom FOV</li>
+            <li class="full">ESP — Skeleton, 2D Box, 3D Box, Tracer, Nametag, Visibility Check, Show Self, Distance, Ping, Actor ID, Tracer Origin, Nametag Anchor, Skeleton Outline, Nametag Background/Outline/Text Only, colors</li>
+            <li class="full">Radial Wheel — custom skin, size, spacing, colors</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Exploits</div>
+          <ul>
+            <li>Set Master</li>
+            <li>Force Master</li>
+            <li>Void All</li>
+            <li>Grab All</li>
+            <li>RAM Crash All</li>
+            <li>Respawn All</li>
+            <li>Despawn All</li>
+            <li>Spawn All</li>
+            <li>Drop Tools All</li>
+            <li>Friend All</li>
+            <li>Cheer All</li>
+            <li>Level All</li>
+            <li>Vanish</li>
+            <li>Gas All</li>
+            <li>Local Developer</li>
+            <li>Local RR+</li>
+            <li>Local Moderator</li>
+            <li>Own Room Keys</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Anti-Exploits</div>
+          <ul>
+            <li>Anti-Droptools</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Misc</div>
+          <ul>
+            <li>Anti-Crash</li>
+            <li>No Rate-Limits</li>
+            <li>SSL Bypass</li>
+            <li>Broadcasting</li>
+            <li>Send Notification</li>
+            <li>Send Chat Message</li>
+            <li>Shrink All Objects</li>
+            <li>Freeze / Unfreeze All</li>
+            <li>Set Grabbable / Ungrab All</li>
+            <li>Delete Creation Objects</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Assets Spawn</div>
+          <ul>
+            <li>Spawn Asset</li>
+            <li>Random Scale</li>
+            <li>Random Rotation</li>
+            <li>Custom Vectors</li>
+            <li>Force Equip</li>
+            <li>Blame Transfer</li>
+            <li>Additional Spawns</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Player List</div>
+          <ul>
+            <li>Void</li>
+            <li>Grab</li>
+            <li>Teleport</li>
+            <li>RAM Crash</li>
+            <li>Sync / Desync</li>
+            <li>Respawn</li>
+            <li>Despawn</li>
+            <li>Spawn</li>
+            <li>Delete</li>
+            <li>Jedi</li>
+            <li>Drop Tools</li>
+            <li>Friend</li>
+            <li>Fake Vote-Kick</li>
+            <li>Disconnect</li>
+            <li>Cheer</li>
+            <li>Level</li>
+            <li>Cheer Crash</li>
+            <li>Promote</li>
+            <li>Notify</li>
+            <li>Chat</li>
+          </ul>
+        </div>
+
+        <div class="cat">
+          <div class="cat-name">Config</div>
+          <ul>
+            <li>Save Config</li>
+            <li>Load Config</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <strong>ZEPHRON</strong> · Universal RecRoom Cheat
+    </footer>
   </div>
-  <h1>ZEPHRON</h1>
-  <p class="subtitle">Universal Rec Room Tool</p>
-
-  <a class="download-btn" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>
-    Download Zephron.dll
-  </a>
-
-  <!-- UPDATE SECTION -->
-  <div class="update-box">
-    <div class="update-header">
-      <div class="update-title">ZEPHRON UPDATE</div>
-      <div class="update-date">Saturday, Augest 1, 2026 • 8:40 PM</div>
-    </div>
-
-    <div class="update-sections">
-      <!-- ADDED -->
-      <div class="update-col">
-        <h3 class="added-title">Added</h3>
-        <ul class="update-list">
-          <li><span class="plus">+</span> Added Custom Zephron Cursor</li>
-          <li><span class="plus">+</span> Just Some Fixes / Stuff To Improve The Menu</li>
-        </ul>
-      </div>
-
-      <!-- REMOVED -->
-      <div class="update-col">
-        <h3 class="removed-title">Removed</h3>
-        <ul class="update-list">
-          <li><span class="minus">−</span> N/A</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <!-- Features Box -->
-    <div class="features-box">
-      <h2>Features</h2>
-      <div class="category">
-        <div class="category-title">Combat</div>
-        <ul class="feature-list">
-          <li>Loop Fire</li>
-          <li>No Recoil</li>
-          <li>Extra Bullets</li>
-          <li>No Cooldown</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Movement</div>
-        <ul class="feature-list">
-          <li>Static Fly</li>
-          <li>Dynamic Fly</li>
-          <li>Walk Speed</li>
-          <li>Jump Height</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Visuals</div>
-        <ul class="feature-list">
-          <li>Custom FOV</li>
-          <li>ESP (Skeleton, 2D Box, 3D Box, Tracer, Nametag, Visibility Check, Show Self, Distance, Ping, Actor ID, Tracer Origin, Nametag Anchor, Skeleton Outline, Nametag Background/Outline/Text Only, colors)</li>
-          <li>Radial Wheel (custom skin, size, spacing, colors)</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Exploits</div>
-        <ul class="feature-list">
-          <li>Set Master</li>
-          <li>Force Master</li>
-          <li>Void All</li>
-          <li>Grab All</li>
-          <li>RAM Crash All</li>
-          <li>Respawn All</li>
-          <li>Despawn All</li>
-          <li>Spawn All</li>
-          <li>Drop Tools All</li>
-          <li>Friend All</li>
-          <li>Cheer All</li>
-          <li>Level All</li>
-          <li>Vanish</li>
-          <li>Gas All</li>
-          <li>Local Developer</li>
-          <li>Local RR+</li>
-          <li>Local Moderator</li>
-          <li>Own Room Keys</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Anti-Exploits</div>
-        <ul class="feature-list">
-          <li>Anti-Droptools</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Misc</div>
-        <ul class="feature-list">
-          <li>Anti-Crash</li>
-          <li>No Rate-Limits</li>
-          <li>SSL Bypass</li>
-          <li>Broadcasting</li>
-          <li>Send Notification</li>
-          <li>Send Chat Message</li>
-          <li>Shrink All Objects</li>
-          <li>Freeze All / Unfreeze All Objects</li>
-          <li>Set Grabbable All / Ungrab All Objects</li>
-          <li>Delete Creation Objects</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Assets Spawn</div>
-        <ul class="feature-list">
-          <li>Spawn Asset</li>
-          <li>Random Scale</li>
-          <li>Random Rotation</li>
-          <li>Custom Vectors</li>
-          <li>Force Equip</li>
-          <li>Blame Transfer</li>
-          <li>Additional Spawns</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Player List</div>
-        <ul class="feature-list">
-          <li>Void</li>
-          <li>Grab</li>
-          <li>Teleport</li>
-          <li>RAM Crash</li>
-          <li>Sync/Desync</li>
-          <li>Respawn</li>
-          <li>Despawn</li>
-          <li>Spawn</li>
-          <li>Delete</li>
-          <li>Jedi</li>
-          <li>Drop Tools</li>
-          <li>Friend</li>
-          <li>Fake Vote-Kick</li>
-          <li>Disconnect</li>
-          <li>Cheer</li>
-          <li>Level</li>
-          <li>Cheer Crash</li>
-          <li>Promote</li>
-          <li>Notify</li>
-          <li>Chat</li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-title">Config System</div>
-        <ul class="feature-list">
-          <li>Save Config</li>
-          <li>Load Config</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Discord Embed -->
-    <div class="discord-section">
-      <h2>Join YEEZY</h2>
-      <iframe
-        src="https://discord.com/widget?id=1389805726079123536&theme=dark"
-        width="350"
-        height="500"
-        allowtransparency="true"
-        frameborder="0"
-        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-      </iframe>
-    </div>
-  </div>
-
-  <footer>
-    <span>Zephron</span> • Universal RecRoom Cheeto
-  </footer>
 </body>
 </html>
