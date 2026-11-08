@@ -1,381 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zephron</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zephron</title>
+<link rel="icon" href="https://aphextwinsymbol.neocities.org/Zephron.png" type="image/png">
+<link rel="apple-touch-icon" href="https://aphextwinsymbol.neocities.org/Zephron.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030208;--panel:#0a0810;--border:#1f1830;--text:#e2dcf0;--muted:#7a7190;--neon:#c084fc;--hot:#f472b6;--green:#4ade80;--red:#f87171}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;position:relative}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url('https://aphextwinsymbol.neocities.org/Zephron.png');background-repeat:repeat;background-size:160px 160px;opacity:.03;transform:rotate(-12deg) scale(1.4);animation:drift 40s linear infinite;filter:grayscale(.3) brightness(1.3)}
+@keyframes drift{from{background-position:0 0}to{background-position:-160px 160px}}
+body::before{content:"";position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(192,132,252,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(192,132,252,.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:32px 20px 60px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:48px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(192,132,252,.7))}
+.brand-text{font-weight:900;font-size:1.35rem;letter-spacing:3px;text-transform:uppercase;background:linear-gradient(90deg,#c084fc,#f472b6,#c084fc);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientMove 4s linear infinite}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;font-size:.9rem;font-weight:700;text-decoration:none;border-radius:6px;transition:.2s ease;letter-spacing:.3px}
+.btn-dl{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;box-shadow:0 0 20px rgba(168,85,247,.35)}
+.btn-dl:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(168,85,247,.55);filter:brightness(1.1)}
+.btn-dc{background:transparent;color:#c4b5fd;border:1px solid #5b21b6}
+.btn-dc:hover{background:rgba(91,33,182,.25);border-color:#a855f7;color:#fff}
+.btn-dc svg{width:16px;height:16px}
+.hero{text-align:center;margin-bottom:48px}
+.hero-logo{width:110px;height:110px;object-fit:contain;margin-bottom:18px;filter:drop-shadow(0 0 28px rgba(192,132,252,.8));animation:pulse 3.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 0 22px rgba(192,132,252,.7));transform:scale(1)}50%{filter:drop-shadow(0 0 40px rgba(244,114,182,.6));transform:scale(1.04)}}
+.hero h1{font-size:clamp(2.8rem,8vw,4.2rem);font-weight:900;letter-spacing:8px;text-transform:uppercase;line-height:1;margin-bottom:10px;background:linear-gradient(90deg,#c084fc,#f472b6,#e879f9,#c084fc);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientMove 5s linear infinite}
+@keyframes gradientMove{0%{background-position:0% center}100%{background-position:300% center}}
+.hero p{font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.changelog{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--neon);border-radius:4px;padding:20px 24px;margin-bottom:40px;font-family:'JetBrains Mono',monospace}
+.changelog-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.changelog-title{font-size:.85rem;font-weight:700;letter-spacing:2px;color:var(--neon);text-transform:uppercase}
+.changelog-date{font-size:.78rem;color:var(--muted)}
+.cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:580px){.cl-grid{grid-template-columns:1fr}}
+.cl-section h3{font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.cl-section.added h3{color:var(--green)}
+.cl-section.removed h3{color:var(--red)}
+.cl-section ul{list-style:none}
+.cl-section li{font-size:.82rem;padding:4px 0;color:#c5bdd4;display:flex;gap:8px}
+.cl-section li span{font-weight:700;flex-shrink:0}
+.plus{color:var(--green)}.minus{color:var(--red)}
+.features-wrap{background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.features-header{padding:16px 22px;border-bottom:1px solid var(--border)}
+.features-header h2{font-size:.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.features-body{max-height:520px;overflow-y:auto;padding:8px 0}
+.features-body::-webkit-scrollbar{width:5px}
+.features-body::-webkit-scrollbar-track{background:transparent}
+.features-body::-webkit-scrollbar-thumb{background:#3b2d5c;border-radius:3px}
+.cat{padding:14px 22px 6px}
+.cat-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--hot);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.cat-name::before{content:"";width:6px;height:6px;background:var(--hot);box-shadow:0 0 8px var(--hot)}
+.cat ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px 16px}
+.cat li{font-size:.88rem;color:#b8b0c8;padding:3px 0;transition:color .15s}
+.cat li:hover{color:#fff}
+.cat li.full{grid-column:1/-1;line-height:1.45}
+footer{margin-top:48px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#4a4458;letter-spacing:1px}
+footer strong{color:var(--neon);font-weight:600}
+@media(max-width:640px){.topbar{flex-direction:column;align-items:flex-start}.top-actions{width:100%}.btn{flex:1;justify-content:center}.hero-logo{width:88px;height:88px}}
 
-  <!-- Favicon -->
-  <link rel="icon" href="https://aphextwinsymbol.neocities.org/Zephron.png" type="image/png">
-  <link rel="apple-touch-icon" href="https://aphextwinsymbol.neocities.org/Zephron.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #030208;
-      --panel: #0a0810;
-      --border: #1f1830;
-      --text: #e2dcf0;
-      --muted: #7a7190;
-      --neon: #c084fc;
-      --hot: #f472b6;
-      --green: #4ade80;
-      --red: #f87171;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image: url('https://aphextwinsymbol.neocities.org/Zephron.png');
-      background-repeat: repeat;
-      background-size: 160px 160px;
-      opacity: 0.03;
-      transform: rotate(-12deg) scale(1.4);
-      animation: drift 40s linear infinite;
-      filter: grayscale(0.3) brightness(1.3);
-    }
-    @keyframes drift {
-      from { background-position: 0 0; }
-      to   { background-position: -160px 160px; }
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image:
-        linear-gradient(rgba(192,132,252,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(192,132,252,0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-    }
-
-    .page {
-      position: relative;
-      z-index: 1;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 32px 20px 60px;
-    }
-
-    /* ===== TOP BAR ===== */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 48px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(192,132,252,0.7));
-    }
-
-    .brand-text {
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #c084fc, #f472b6, #c084fc);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradientMove 4s linear infinite;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 20px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: 0.2s ease;
-      letter-spacing: 0.3px;
-    }
-
-    .btn-dl {
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(168,85,247,0.35);
-    }
-    .btn-dl:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 32px rgba(168,85,247,0.55);
-      filter: brightness(1.1);
-    }
-
-    .btn-dc {
-      background: transparent;
-      color: #c4b5fd;
-      border: 1px solid #5b21b6;
-    }
-    .btn-dc:hover {
-      background: rgba(91,33,182,0.25);
-      border-color: #a855f7;
-      color: #fff;
-    }
-
-    .btn-dc svg { width: 16px; height: 16px; }
-
-    /* ===== HERO ===== */
-    .hero {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .hero-logo {
-      width: 110px;
-      height: 110px;
-      object-fit: contain;
-      margin-bottom: 18px;
-      filter: drop-shadow(0 0 28px rgba(192,132,252,0.8));
-      animation: pulse 3.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { filter: drop-shadow(0 0 22px rgba(192,132,252,0.7)); transform: scale(1); }
-      50%     { filter: drop-shadow(0 0 40px rgba(244,114,182,0.6)); transform: scale(1.04); }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.8rem, 8vw, 4.2rem);
-      font-weight: 900;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #c084fc, #f472b6, #e879f9, #c084fc);
-      background-size: 300% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradientMove 5s linear infinite;
-    }
-
-    @keyframes gradientMove {
-      0%   { background-position: 0% center; }
-      100% { background-position: 300% center; }
-    }
-
-    .hero p {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* ===== CHANGELOG ===== */
-    .changelog {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--neon);
-      border-radius: 4px;
-      padding: 20px 24px;
-      margin-bottom: 40px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .changelog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .changelog-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--neon);
-      text-transform: uppercase;
-    }
-
-    .changelog-date {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .cl-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    @media (max-width: 580px) {
-      .cl-grid { grid-template-columns: 1fr; }
-    }
-
-    .cl-section h3 {
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .cl-section.added h3 { color: var(--green); }
-    .cl-section.removed h3 { color: var(--red); }
-
-    .cl-section ul { list-style: none; }
-    .cl-section li {
-      font-size: 0.82rem;
-      padding: 4px 0;
-      color: #c5bdd4;
-      display: flex;
-      gap: 8px;
-    }
-    .cl-section li span { font-weight: 700; flex-shrink: 0; }
-    .plus { color: var(--green); }
-    .minus { color: var(--red); }
-
-    /* ===== FEATURES ===== */
-    .features-wrap {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .features-header {
-      padding: 16px 22px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .features-header h2 {
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #fff;
-    }
-
-    .features-body {
-      max-height: 520px;
-      overflow-y: auto;
-      padding: 8px 0;
-    }
-
-    .features-body::-webkit-scrollbar { width: 5px; }
-    .features-body::-webkit-scrollbar-track { background: transparent; }
-    .features-body::-webkit-scrollbar-thumb { background: #3b2d5c; border-radius: 3px; }
-
-    .cat {
-      padding: 14px 22px 6px;
-    }
-
-    .cat-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      color: var(--hot);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .cat-name::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      background: var(--hot);
-      box-shadow: 0 0 8px var(--hot);
-    }
-
-    .cat ul {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 2px 16px;
-    }
-
-    .cat li {
-      font-size: 0.88rem;
-      color: #b8b0c8;
-      padding: 3px 0;
-      transition: color 0.15s;
-    }
-    .cat li:hover { color: #fff; }
-
-    .cat li.full {
-      grid-column: 1 / -1;
-      line-height: 1.45;
-    }
-
-    footer {
-      margin-top: 48px;
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: #4a4458;
-      letter-spacing: 1px;
-    }
-    footer strong {
-      color: var(--neon);
-      font-weight: 600;
-    }
-
-    @media (max-width: 640px) {
-      .topbar { flex-direction: column; align-items: flex-start; }
-      .top-actions { width: 100%; }
-      .btn { flex: 1; justify-content: center; }
-      .hero-logo { width: 88px; height: 88px; }
-    }
-  </style>
+/* ===== INTERACTIVE MENU DEMO (everything scoped under #menu) ===== */
+.demo-head{margin-bottom:14px}
+.demo-head h2{font-size:.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.demo-head p{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);margin-top:6px}
+#menu{--a:#b199ff;--b:#e879f9;--c:#6d8bff;--tx:#f3f1fa;--mu:#a7a3ba;--fa:#6f6b82;--ln:rgba(255,255,255,.07);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.5;color:var(--tx);position:relative;margin:0 0 40px;border-radius:26px;display:grid;grid-template-columns:230px 1fr;height:700px;overflow:hidden;background:rgba(10,9,20,.72);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px -30px rgba(0,0,0,.9),0 0 90px -30px var(--a)}
+#menu::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 40% at 30% 0,color-mix(in srgb,var(--a) 26%,transparent),transparent),radial-gradient(50% 40% at 90% 100%,color-mix(in srgb,var(--c) 18%,transparent),transparent)}
+#menu button{font-family:inherit;color:inherit}
+#menu :focus-visible{outline:2px solid var(--a);outline-offset:2px}
+#menu .side{position:relative;padding:20px 14px;background:rgba(0,0,10,.3);border-right:1px solid var(--ln);display:flex;flex-direction:column;min-height:0}
+#menu .mbrand{display:flex;gap:11px;align-items:center;padding:4px 8px 16px}
+#menu .mbrand img{width:34px;height:34px;border-radius:9px}
+#menu .mbrand b{display:block;font-size:1rem}
+#menu .mbrand small{color:var(--mu);font-size:.7rem}
+#menu .lbl{padding:4px 12px 6px;font-size:.7rem;font-weight:700;color:var(--fa);letter-spacing:.06em}
+#menu .nav{display:flex;flex-direction:column;gap:1px;flex:1;overflow:auto;min-height:0}
+#menu .nav::-webkit-scrollbar{width:0}
+#menu .nav button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:12px;font-size:.86rem;font-weight:600;color:var(--mu);cursor:pointer;position:relative;transition:.2s;flex:none}
+#menu .nav button:hover{color:var(--tx);background:rgba(255,255,255,.04)}
+#menu .nav button:focus-visible{outline:2px solid var(--a)}
+#menu .nav button.on{color:var(--tx);background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+#menu .nav button.on::before{content:"";position:absolute;left:5px;top:25%;bottom:25%;width:3px;border-radius:3px;background:linear-gradient(var(--a),var(--b))}
+#menu .nav i{font-style:normal;width:18px;text-align:center;color:var(--fa)}
+#menu .nav button.on i{color:var(--a)}
+#menu .foot{padding:12px 10px 2px;border-top:1px solid var(--ln);font-size:.72rem;color:var(--mu)}
+#menu .foot b{display:block;color:var(--tx);font-size:.78rem}
+#menu .main{position:relative;padding:28px 34px 40px;overflow:auto;min-height:0}
+#menu .main::-webkit-scrollbar{width:5px}
+#menu .main::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
+#menu .ph h2{font-size:1.7rem;font-weight:800;letter-spacing:-.02em;text-transform:none;color:var(--tx)}
+#menu .ph p{color:var(--mu);font-size:.92rem;margin:3px 0 20px}
+#menu .list{display:flex;flex-direction:column;gap:10px;max-width:640px}
+#menu .cells{display:grid;gap:10px 18px;align-items:center}
+#menu .tw{min-width:0}
+#menu .tg{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.9rem;font-weight:500;color:var(--mu);padding:3px 0;transition:color .2s}
+#menu .tg:hover,#menu .tg.on{color:var(--tx)}
+#menu .tg:focus-visible{outline:2px solid var(--a);border-radius:8px}
+#menu .tg[aria-disabled=true]{cursor:not-allowed;opacity:.55}
+#menu .sw{flex:none;width:40px;height:22px;border-radius:99px;background:rgba(255,255,255,.12);position:relative;transition:.25s}
+#menu .sw::after{content:"";position:absolute;top:2.5px;left:2.5px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+#menu .tg.on .sw{background:linear-gradient(90deg,var(--a),var(--b))}
+#menu .tg.on .sw::after{transform:translateX(18px)}
+#menu .sub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+#menu .sub.open{grid-template-rows:1fr}
+#menu .sub>div{overflow:hidden;min-height:0}
+#menu .sub .list{padding-top:12px;padding-bottom:4px}
+#menu .mb{width:100%;padding:9px 16px;border-radius:99px;font-size:.88rem;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:background .2s,transform .1s,box-shadow .2s;text-align:center}
+#menu .mb:hover{background:color-mix(in srgb,var(--a) 28%,transparent);box-shadow:0 0 22px -8px var(--a)}
+#menu .mb:active{transform:scale(.985);background:color-mix(in srgb,var(--a) 48%,transparent)}
+#menu .mb.sm{width:auto;padding:5px 13px;font-size:.78rem}
+#menu .mb.warn{border-color:#f87171;background:rgba(248,113,113,.14)}
+#menu .fr{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;font-size:.88rem;color:var(--mu)}
+#menu .sld{position:relative;height:34px;border-radius:10px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+#menu .sld i{position:absolute;inset:0 auto 0 0;width:var(--p);background:linear-gradient(90deg,color-mix(in srgb,var(--a) 30%,transparent),color-mix(in srgb,var(--b) 30%,transparent))}
+#menu .sld u{position:absolute;top:5px;bottom:5px;width:12px;border-radius:8px;background:#fff;left:calc(var(--p)*(100% - 14px)/100 + 1px);text-decoration:none;box-shadow:0 0 12px color-mix(in srgb,var(--a) 70%,transparent)}
+#menu .sld output{position:absolute;inset:0;display:grid;place-items:center;font-size:.82rem;font-weight:600;color:var(--tx);pointer-events:none}
+#menu .sld input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0}
+#menu .sld:focus-within{outline:2px solid var(--a)}
+#menu .inp,#menu .cmb{width:100%;height:34px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);color:var(--tx);font:inherit;font-size:.88rem}
+#menu .inp::placeholder{color:var(--fa)}
+#menu .inp:focus,#menu .cmb:focus{outline:2px solid var(--a)}
+#menu .cmb option{background:#0d0b18}
+#menu .col{display:flex;align-items:center;gap:12px;font-size:.88rem;color:var(--mu)}
+#menu .col input{width:60px;height:30px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:none;padding:2px;cursor:pointer}
+#menu .sep{display:flex;align-items:center;gap:12px;font-size:.78rem;font-weight:700;color:var(--mu);padding-top:8px;letter-spacing:.04em}
+#menu .sep::after{content:"";flex:1;height:1px;background:var(--ln)}
+#menu hr{border:0;height:1px;background:var(--ln);margin:4px 0}
+#menu .cap{font-size:.8rem;color:var(--fa);margin-top:-4px}
+#menu .dl{font-size:.82rem;color:var(--mu)}
+#menu .pr{border-radius:10px;background:color-mix(in srgb,var(--a) 14%,transparent);border:1px solid color-mix(in srgb,var(--a) 22%,transparent)}
+#menu .pr>button{all:unset;box-sizing:border-box;display:flex;width:100%;gap:14px;padding:8px 14px;cursor:pointer;font-size:.88rem;font-weight:500}
+#menu .pr>button::before{content:"\25B6";font-size:.7rem;line-height:1.9;transition:transform .2s}
+#menu .pr.open>button::before{transform:rotate(90deg)}
+#menu .pr .acts{display:none;flex-wrap:wrap;gap:6px;padding:4px 12px 12px}
+#menu .pr.open .acts{display:flex}
+#menu .sws{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;max-width:640px}
+#menu .sws button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);font-size:.82rem;font-weight:600;color:var(--mu);cursor:pointer;transition:.2s}
+#menu .sws button:hover{color:var(--tx);background:rgba(255,255,255,.07)}
+#menu .sws button.sel{color:var(--tx);border-color:var(--a)}
+#menu .dot{width:36px;height:14px;border-radius:9px;flex:none}
+#menu .cr{display:flex;justify-content:space-between;padding:15px 16px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);font-size:.9rem;font-weight:600}
+#menu .cr span:last-child{color:var(--mu);font-weight:500}
+#menu .note{padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--a) 9%,transparent);border:1px solid color-mix(in srgb,var(--a) 25%,transparent);color:var(--mu);font-size:.85rem}
+#menu .rs{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#menu .rs button.o{all:unset;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--a)}
+#menu .toast{position:absolute;right:20px;bottom:20px;max-width:80%;padding:12px 18px;border-radius:14px;background:rgba(8,7,16,.95);border:1px solid rgba(255,255,255,.12);font-size:.85rem;font-weight:600;transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none;box-shadow:0 10px 40px -10px #000,0 0 30px -10px var(--a)}
+#menu .toast.show{transform:none;opacity:1}
+@media(max-width:860px){
+#menu{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:720px}
+#menu .side{border-right:0;border-bottom:1px solid var(--ln);padding:10px}
+#menu .mbrand,#menu .lbl,#menu .foot{display:none}
+#menu .nav{flex-direction:row;overflow-x:auto;gap:4px;flex:none}
+#menu .nav button{white-space:nowrap}
+#menu .nav button.on::before{display:none}
+#menu .main{padding:22px 18px 40px}
+#menu .cells{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){#menu *,#menu::before{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
 
   <div class="page">
-    <!-- TOP BAR -->
     <header class="topbar">
       <div class="brand">
         <img src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron">
         <div class="brand-text">Zephron</div>
       </div>
       <div class="top-actions">
-        <a class="btn btn-dl" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>
-          Download DLL
-        </a>
+        <a class="btn btn-dl" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron.dll" download>Download DLL (Old UI)</a>
+        <a class="btn btn-dl" href="https://github.com/AphexStuff/Zephron/raw/refs/heads/main/Zephron%20(NEW%20UI).dll" download>Download DLL (New UI)</a>
         <a class="btn btn-dc" href="https://discord.gg/72X3cGQtHu" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.102 18.08.114 18.1.129 18.11a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           Discord
@@ -383,179 +182,161 @@
       </div>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
       <img class="hero-logo" src="https://aphextwinsymbol.neocities.org/Zephron.png" alt="Zephron">
       <h1>Zephron</h1>
-      <p>Universal Rec Room Cheat</p>
+      <p>Universal RecRoom Cheat</p>
     </section>
 
-    <!-- CHANGELOG -->
     <section class="changelog">
       <div class="changelog-header">
         <div class="changelog-title">// Latest Update</div>
-        <div class="changelog-date">Friday, August 7, 2026 · 9:35 PM</div>
+        <div class="changelog-date">Sunday, November 8, 2026 · 11:31 AM</div>
       </div>
       <div class="cl-grid">
         <div class="cl-section added">
           <h3>Added</h3>
           <ul>
-            <li><span class="plus">+</span> New Antis</li>
-            <li><span class="plus">+</span> Disable Go To Room</li>
-            <li><span class="plus">+</span> Disable Banner CV2</li>
-            <li><span class="plus">+</span> Disable Ram Crash (Cheer)</li>
-            <li><span class="plus">+</span> Disable Ram Crash (Bullets)</li>
+            <li><span class="plus">+</span> New UI</li>
+            <li><span class="plus">+</span> Try The Menu section on the website</li>
+            <li><span class="plus">+</span> Second download button for the New UI DLL</li>
           </ul>
         </div>
         <div class="cl-section removed">
           <h3>Removed</h3>
-          <ul>
-            <li><span class="minus">−</span> N/A</li>
-          </ul>
+          <ul><li><span class="minus">−</span> N/A</li></ul>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
+    <!-- ===== INTERACTIVE MENU DEMO ===== -->
+    <div class="demo-head">
+      <h2>Try The Menu</h2>
+      <p>// Demo of the Zephron. This demo isnt fully accurate </p>
+    </div>
+    <section id="menu" aria-label="Interactive Zephron menu demo">
+      <aside class="side">
+        <div class="mbrand"><img src="https://aphextwinsymbol.neocities.org/Zephron.png" alt=""><div><b>Zephron</b><small>Universal RecRoom Cheat</small></div></div>
+        <div class="lbl">MENU</div>
+        <div class="nav" id="nav" role="tablist"></div>
+        <div class="foot"><b>Zephron</b><span id="kf">INSERT toggles the menu</span></div>
+      </aside>
+      <div class="main" id="main" tabindex="-1"></div>
+      <div class="toast" id="toast" role="status"></div>
+    </section>
+
     <section class="features-wrap">
-      <div class="features-header">
-        <h2>Feature List</h2>
-      </div>
+      <div class="features-header"><h2>Feature List</h2></div>
       <div class="features-body">
-
-        <div class="cat">
-          <div class="cat-name">Combat</div>
-          <ul>
-            <li>Loop Fire</li>
-            <li>No Recoil</li>
-            <li>Extra Bullets</li>
-            <li>No Cooldown</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Movement</div>
-          <ul>
-            <li>Static Fly</li>
-            <li>Dynamic Fly</li>
-            <li>Walk Speed</li>
-            <li>Jump Height</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Visuals</div>
-          <ul>
-            <li>Custom FOV</li>
-            <li class="full">ESP — Skeleton, 2D Box, 3D Box, Tracer, Nametag, Visibility Check, Show Self, Distance, Ping, Actor ID, Tracer Origin, Nametag Anchor, Skeleton Outline, Nametag Background/Outline/Text Only, colors</li>
-            <li class="full">Radial Wheel — custom skin, size, spacing, colors</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Exploits</div>
-          <ul>
-            <li>Set Master</li>
-            <li>Force Master</li>
-            <li>Void All</li>
-            <li>Grab All</li>
-            <li>RAM Crash All</li>
-            <li>Respawn All</li>
-            <li>Despawn All</li>
-            <li>Spawn All</li>
-            <li>Drop Tools All</li>
-            <li>Friend All</li>
-            <li>Cheer All</li>
-            <li>Level All</li>
-            <li>Vanish</li>
-            <li>Gas All</li>
-            <li>Local Developer</li>
-            <li>Local RR+</li>
-            <li>Local Moderator</li>
-            <li>Own Room Keys</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Anti-Exploits</div>
-          <ul>
-            <li>Anti-Droptools</li>
-            <li>Disable Go To Room</li>
-            <li>Disable Banner CV2</li>
-            <li>Disable Ram Crash (Cheer)</li>
-            <li>Disable Ram Crash (Bullets)</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Misc</div>
-          <ul>
-            <li>Anti-Crash</li>
-            <li>No Rate-Limits</li>
-            <li>SSL Bypass</li>
-            <li>Broadcasting</li>
-            <li>Send Notification</li>
-            <li>Send Chat Message</li>
-            <li>Shrink All Objects</li>
-            <li>Freeze / Unfreeze All</li>
-            <li>Set Grabbable / Ungrab All</li>
-            <li>Delete Creation Objects</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Assets Spawn</div>
-          <ul>
-            <li>Spawn Asset</li>
-            <li>Random Scale</li>
-            <li>Random Rotation</li>
-            <li>Custom Vectors</li>
-            <li>Force Equip</li>
-            <li>Blame Transfer</li>
-            <li>Additional Spawns</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Player List</div>
-          <ul>
-            <li>Void</li>
-            <li>Grab</li>
-            <li>Teleport</li>
-            <li>RAM Crash</li>
-            <li>Sync / Desync</li>
-            <li>Respawn</li>
-            <li>Despawn</li>
-            <li>Spawn</li>
-            <li>Delete</li>
-            <li>Jedi</li>
-            <li>Drop Tools</li>
-            <li>Friend</li>
-            <li>Fake Vote-Kick</li>
-            <li>Disconnect</li>
-            <li>Cheer</li>
-            <li>Level</li>
-            <li>Cheer Crash</li>
-            <li>Promote</li>
-            <li>Notify</li>
-            <li>Chat</li>
-          </ul>
-        </div>
-
-        <div class="cat">
-          <div class="cat-name">Config</div>
-          <ul>
-            <li>Save Config</li>
-            <li>Load Config</li>
-          </ul>
-        </div>
-
+        <div class="cat"><div class="cat-name">Combat</div><ul><li>Loop Fire</li><li>No Recoil</li><li>Extra Bullets</li><li>No Cooldown</li></ul></div>
+        <div class="cat"><div class="cat-name">Movement</div><ul><li>Static Fly</li><li>Dynamic Fly</li><li>Walk Speed</li><li>Jump Height</li></ul></div>
+        <div class="cat"><div class="cat-name">Visuals</div><ul>
+          <li>Custom FOV</li>
+          <li class="full">ESP</li>
+          <li class="full">Radial Wheel</li></ul></div>
+        <div class="cat"><div class="cat-name">Exploits</div><ul><li>Set Master</li><li>Force Master</li><li>Void All</li><li>Grab All</li><li>RAM Crash All</li><li>Respawn All</li><li>Despawn All</li><li>Spawn All</li><li>Drop Tools All</li><li>Friend All</li><li>Cheer All</li><li>Level All</li><li>Vanish</li><li>Gas All</li><li>Local Developer</li><li>Local RR+</li><li>Local Moderator</li><li>Own Room Keys</li></ul></div>
+        <div class="cat"><div class="cat-name">Anti-Exploits</div><ul><li>Anti-Droptools</li><li>Disable Go To Room</li><li>Disable Banner CV2</li><li>Disable Ram Crash (Cheer)</li><li>Disable Ram Crash (Bullets)</li></ul></div>
+        <div class="cat"><div class="cat-name">Misc</div><ul><li>Anti-Crash</li><li>No Rate-Limits</li><li>SSL Bypass</li><li>Broadcasting</li><li>Send Notification</li><li>Send Chat Message</li><li>Shrink All Objects</li><li>Freeze / Unfreeze All</li><li>Set Grabbable / Ungrab All</li><li>Delete Creation Objects</li></ul></div>
+        <div class="cat"><div class="cat-name">Assets Spawn</div><ul><li>Spawn Asset</li><li>Random Scale</li><li>Random Rotation</li><li>Custom Vectors</li><li>Force Equip</li><li>Blame Transfer</li><li>Additional Spawns</li></ul></div>
+        <div class="cat"><div class="cat-name">Player List</div><ul><li>Void</li><li>Grab</li><li>Teleport</li><li>RAM Crash</li><li>Sync / Desync</li><li>Respawn</li><li>Despawn</li><li>Spawn</li><li>Delete</li><li>Jedi</li><li>Drop Tools</li><li>Friend</li><li>Fake Vote-Kick</li><li>Disconnect</li><li>Cheer</li><li>Level</li><li>Cheer Crash</li><li>Promote</li><li>Notify</li><li>Chat</li></ul></div>
+        <div class="cat"><div class="cat-name">Config</div><ul><li>Save Config</li><li>Load Config</li></ul></div>
       </div>
     </section>
 
-    <footer>
-      <strong>ZEPHRON</strong> · Universal RecRoom Cheat
-    </footer>
+    <footer><strong>ZEPHRON</strong> · Universal RecRoom Cheat</footer>
   </div>
+
+<script>
+/* ---- menu demo: control types ----
+   T toggle (sub, on, lock)  B button  S slider  I input  D combo  K colour  H header  L label  C caption  R row */
+const T=(n,o={})=>({k:"t",n,...o}),B=n=>({k:"b",n}),S=(n,a,b,v,d=0,pre="")=>({k:"s",n,a,b,v,d,pre}),I=(n,o={})=>({k:"i",n,...o}),
+D=(n,opts)=>({k:"d",n,opts}),K=(n,v)=>({k:"c",n,v}),H=n=>({k:"h",n}),L=n=>({k:"l",n}),C=n=>({k:"cap",n}),HR={k:"hr"},
+R=(c,cols)=>({k:"r",c,cols}),pairs=a=>a.reduce((r,x,i)=>(i%2?r[r.length-1].c.push(x):r.push(R([x])),r),[]);
+const wheel=["Void","Grab","Goto","RAM Crash","Sync/Desync","Respawn","Despawn","Spawn","Delete","Jedi","Drop","Friend","Promote","Cheer Crash"].map(n=>T(n));
+const wcol=["Wheel Background Color","Wheel Outline Color","Button Color","Button Hover Color","Button Disabled Color","Button Outline Color","Button Hover Outline","Button Disabled Outline","Button Text Color","Disabled Text Color","Center Text Color"].map((n,i)=>K(n,["#14101f","#b199ff","#2a2140","#6b4fd0","#17131f","#443a66","#b199ff","#2a2140","#ffffff","#7a7190","#ffffff"][i]));
+const T2=(...a)=>pairs(a.map(n=>T(n)));
+const esp=[...T2("Skeleton","2D Box","3D Box","Tracer","Nametag","Visibility Check","Show Self","Distance","Ping","Actor ID"),
+ D("Tracer Origin",["Center","Top","Bottom"]),D("Nametag Anchor",["Head","Body","Left Hand","Right Hand"]),
+ ...T2("Skeleton Outline","Nametag BG","Nametag Outline","Nametag Text Only"),
+ S("ESP Max Distance",10,1000,300),S("ESP Thickness",1,5,1.5,1),S("Skeleton Outline Size",0,8,2,1),S("ESP Padding",0,24,4,1),S("2D Max Height",40,500,200),S("3D Box Width",.2,2,.6,2),S("3D Box Depth",.2,2,.6,2),S("3D Box Height",.8,3,1.8,2),S("Nametag Offset",-40,80,10),S("Nametag Pad X",0,20,6),S("Nametag Pad Y",0,14,3),
+ ...["Visible Color","Hidden Color","Friend Color","Skeleton Outline Color","Nametag Text Color","Nametag BG Color","Nametag Outline Color","Fill Color"].map((n,i)=>K(n,["#4ade80","#f87171","#60a5fa","#000000","#ffffff","#14101f","#000000","#b199ff"][i]))];
+const wstyle=[...T2("Wheel Background","Button Fill"),T("Center Label"),S("Wheel Size",120,560,300),S("Button Size",24,150,70),S("Button Spacing",-80,180,20),S("Hover Growth",0,80,20),S("Wheel Outline",0,8,2,1),S("Button Outline",0,8,1,1),S("Label Offset Y",-120,120,0),...wcol];
+const P=[
+{id:"search",n:"Search",i:"&#9906;",d:"Find any feature fast"},
+{id:"combat",n:"Combat",i:"&#10022;",d:"Weapons and fire control",x:[...T2("Loop Fire","No Recoil"),T("Extra Bullets",{sub:[S("Extra Bullet Amount",1,200,50)]}),T("No Cooldown")]},
+{id:"move",n:"Movement",i:"&#10148;",d:"Fly and move your way",x:[...T2("Static Fly","Dynamic Fly"),T("Walk Speed",{sub:[S("Walkspeed",0,200,30,1)]}),T("Jump Height",{sub:[S("Jumppower",0,200,30,1)]})]},
+{id:"misc",n:"Misc",i:"&#9638;",d:"Utilities and room tools",x:[...T2("Anti-Crash","No Rate-Limits"),T("SSL Bypass"),B("Broadcasting"),HR,L("major notification"),I("Message..."),B("Send Notification"),HR,L("global chat"),I("Message..."),B("Send Chat Message"),HR,L("creation objects"),S("",.001,2,.5,3,"Scale: "),B("Shrink All"),R([B("Freeze All"),B("Unfreeze All")]),R([B("Set Grabbable All"),B("Set Ungrab All")]),B("Delete Creation Objects")]},
+{id:"vis",n:"Visuals",i:"&#9998;",d:"ESP, FOV and the radial wheel",x:[T("Custom FOV",{sub:[S("FOV",60,180,90)]}),T("Radial Wheel (MMB)",{sub:[H("WHEEL ACTIONS"),...pairs(wheel),H("WHEEL STYLE"),T("Custom Wheel",{sub:wstyle})]}),T("ESP",{sub:esp})]},
+{id:"exp",n:"Exploits",i:"&#9650;",d:"Room-wide and local actions",x:[B("Set Master"),T("Force Master"),HR,B("Void All"),B("Grab All"),B("RAM Crash All"),B("Respawn All"),B("Despawn All"),B("Spawn All"),B("Drop Tools All"),B("Friend All"),B("Cheer All"),B("Level All"),T("Vanish"),HR,L("gas config"),I("Room name (blank = dorm)"),B("Gas All"),...T2("Local Developer","Local RR+","Local Moderator","Own Room Keys")]},
+{id:"asset",n:"Asset Spawn",i:"&#9724;",d:"Spawn assets with full control",x:[B("Spawn Asset"),...T2("Random Scale","Random Rotation","Custom Vectors","Force Equip"),T("Blame Transfer",{sub:[D("Blame Mode",["Master","Random"])]}),S("Additional Spawns",1,200,1),{...I("Scale 1.0"),ifnot:"Random Scale"},{...I("Min / Max 0.5, 2.0"),if:"Random Scale"},{...I("Position 0.0, 0.0, 0.0"),if:"Custom Vectors"},{...I("Rotation 0.0, 0.0, 0.0, 1.0"),if:"Custom Vectors"},R([I("Enter Prefab Here"),B("Paste"),B("Clear")],"1fr auto auto")]},
+{id:"cfg",n:"Configs",i:"&#9881;",d:"Save and load your setup",x:[I("Config name"),B("Save Config"),B("Load Config")]},
+{id:"theme",n:"Themes",i:"&#9673;",d:"Choose your client theme"},
+{id:"anti",n:"Anti-Exploits",i:"&#9874;",d:"Doing the anti-cheat's job right here",x:[T("Anti-Droptools"),T("Disable Go To Room"),T("Disable Banner CV2"),T("Disable RAM Crash (Cheer)"),T("Disable RAM Crash (Bullets)")]},
+{id:"pl",n:"Player List",i:"&#9823;",d:"Actions on any player in the room"},
+{id:"extra",n:"Extras",i:"&#10010;",d:"Overlays, keybinds and more",x:[H("OVERLAY"),T("Show FPS Counter"),C("Top-right corner, always visible."),T("Background Effects",{on:1}),C("On By Default. Can Be Interacted With"),H("KEYBINDS"),{k:"key"},C("Defaults to Insert. Click above, then press the key you want."),H("DANGER ZONE"),C("Fully removes the menu, watermark, and every feature for the rest of"),C("this session. Cannot be undone or reopened without reinjecting."),{k:"kill"}]},
+{id:"cred",n:"Credits",i:"&#9829;",d:"The people behind Zephron"}
+];
+const TH=[["Dark Purple","#b199ff","#e879f9","#6d8bff"],["Borealis","#2ee6c4","#4d9eff","#9e63ff"],["Nebula","#9966ff","#f252a8","#4285fa"],["Ember","#fd9142","#f7456b","#fdc738"],["Glacier","#33d9f2","#6b9eff","#ccbdff"],["Verdant","#5be685","#33ccdb","#e6e661"],["Mono","#ebedf5","#949aad","#c7ccdf"],["Mocha","#d8a1fc","#fc9ed8","#9ea1fc"],["Nord","#88c0d0","#9ba4e0","#7ad0b4"],["Dracula","#bd93f9","#f98ac7","#7a9bf9"],["Tokyo Night","#7aa2f7","#bb9af7","#7dcfff"],["Gruvbox","#d79921","#cc6b3a","#98971a"],["Rose Pine","#eb6f92","#c4a7e7","#f6c177"],["Synthwave","#f92aad","#ff7a3d","#7d4bff"],["Cyberpunk","#fcee09","#fc8a09","#b6fc09"],["Ocean","#00b4d8","#0077ff","#00e0b0"],["Forest","#52b788","#2d9ec4","#b7e07a"],["Sakura","#f48fb1","#d78ff4","#f4a58f"],["Coffee","#c8956c","#d46b5c","#e0c27a"],["Midnight","#6060ee","#a060ee","#60a8ee"],["Mint","#00e5a0","#00b8e5","#a0e500"],["Sunset","#ff7eb3","#ff9a5c","#a07eff"],["Neon","#00ff88","#00cfff","#a6ff00"]];
+const PL=["[0] [M] [YOU] Player (65ms)","[1] Player (48ms)","[2] Player (71ms)"];
+const ACT=["Void","Grab","Teleport","RAM Crash","Desync","Respawn","Despawn","Spawn","Delete","Jedi","Drop","Friend","Fake VK","Disconnect","Cheer","Level","Cheer Crash","Promote","Notify","Chat"];
+const $=s=>document.querySelector(s),st={on:{},v:{}};let cur="combat",ti=0,keyName="Insert";
+const menu=$("#menu"),nav=$("#nav"),main=$("#main");
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),1800)}
+function applyIf(){main.querySelectorAll("[data-if],[data-ifnot]").forEach(e=>{const a=e.dataset.if,b=e.dataset.ifnot;e.hidden=!!((a&&!st.on[a])||(b&&st.on[b]))})}
+function btn(n,sm){const b=el("button","mb"+(sm?" sm":""),n);b.onclick=()=>toast(n+" sent (demo)");return b}
+function build(x){
+  if(x.k==="t"){
+    const w=el("div","tw"),b=el("button","tg"+((x.on||st.on[x.n])?" on":""),`<span class="sw"></span>${x.n}`);
+    if(x.on&&st.on[x.n]===undefined)st.on[x.n]=1;
+    b.setAttribute("role","switch");b.setAttribute("aria-checked",!!st.on[x.n]);w.append(b);
+    if(x.lock){b.className="tg on";b.setAttribute("aria-disabled","true");b.onclick=()=>toast("SSL Bypass is always on")}
+    let sub;
+    if(x.sub){sub=el("div","sub"+(st.on[x.n]?" open":""));const i=el("div"),l=el("div","list");x.sub.forEach(s=>l.append(build(s)));i.append(l);sub.append(i);sub.inert=!st.on[x.n];w.append(sub)}
+    if(!x.lock)b.onclick=()=>{st.on[x.n]=!st.on[x.n];b.classList.toggle("on",!!st.on[x.n]);b.setAttribute("aria-checked",!!st.on[x.n]);if(sub){sub.classList.toggle("open",!!st.on[x.n]);sub.inert=!st.on[x.n]}applyIf();toast(x.n+(st.on[x.n]?" enabled":" disabled"))};
+    return w}
+  if(x.k==="b")return btn(x.n);
+  if(x.k==="s"){
+    const key=x.n+x.a,v0=st.v[key]??x.v,f=el("div","fr"),s=el("div","sld",`<i></i><u></u><output></output><input type="range" min="${x.a}" max="${x.b}" step="${x.d?Math.pow(10,-x.d):1}" aria-label="${x.n||"Scale"}">`);
+    const r=s.querySelector("input"),o=s.querySelector("output"),up=()=>{const v=+r.value;st.v[key]=v;s.style.setProperty("--p",(v-x.a)/(x.b-x.a)*100);o.textContent=x.pre+v.toFixed(x.d)};
+    r.value=v0;r.oninput=up;up();f.append(s);if(x.n)f.append(el("span",0,x.n));else f.style.gridTemplateColumns="1fr";return f}
+  if(x.k==="i"){const i=el("input","inp");i.placeholder=x.n;i.setAttribute("aria-label",x.n);if(x.if)i.dataset.if=x.if;if(x.ifnot)i.dataset.ifnot=x.ifnot;return i}
+  if(x.k==="d"){const f=el("div","fr"),s=el("select","cmb",x.opts.map(o=>`<option>${o}</option>`).join(""));s.setAttribute("aria-label",x.n);f.append(s,el("span",0,x.n));return f}
+  if(x.k==="c"){const f=el("label","col"),i=el("input");i.type="color";i.value=x.v;f.append(i,el("span",0,x.n));return f}
+  if(x.k==="h")return el("div","sep",x.n);
+  if(x.k==="l")return el("div","dl",x.n);
+  if(x.k==="cap")return el("div","cap",x.n);
+  if(x.k==="hr")return el("hr");
+  if(x.k==="r"){const r=el("div","cells");r.style.gridTemplateColumns=x.cols||`repeat(${x.c.length>1?2:1},minmax(0,1fr))`;if(!x.cols&&x.c.length===1)r.style.gridTemplateColumns="minmax(0,1fr)";x.c.forEach(c=>r.append(build(c)));return r}
+  if(x.k==="key"){const b=el("button","mb","Menu Key: "+keyName);b.onclick=()=>{b.textContent="Press any key... (Esc cancels)";const h=e=>{e.preventDefault();removeEventListener("keydown",h,1);if(e.key!=="Escape"){keyName=e.key===" "?"Space":e.key.length>1?e.key:e.key.toUpperCase();$("#kf").textContent=keyName.toUpperCase()+" toggles the menu";toast("Menu key set to "+keyName)}b.textContent="Menu Key: "+keyName};addEventListener("keydown",h,1)};return b}
+  if(x.k==="kill"){const b=el("button","mb","Kill Menu");let armed=0,t;b.onclick=()=>{if(!armed){armed=1;b.className="mb warn";b.textContent="Click again to confirm - cannot be undone";t=setTimeout(()=>{armed=0;b.className="mb";b.textContent="Kill Menu"},5000)}else{clearTimeout(t);armed=0;b.className="mb";b.textContent="Kill Menu";toast("Demo only: the real button removes the menu")}};return b}
+  return el("div")}
+function page(p){
+  const Bd=$("#body");
+  if(p.x){const l=el("div","list");p.x.forEach(x=>l.append(build(x)));Bd.append(l)}
+  if(p.id==="search"){
+    const l=el("div","list"),q=el("input","inp");q.placeholder="Search features...";q.setAttribute("aria-label","Search features");const res=el("div","list");l.append(q,res);Bd.append(l);
+    const all=[];P.forEach(pg=>{const w=x=>{if(x.k==="t")all.push([x.n,pg]);(x.sub||[]).forEach(w);(x.c||[]).forEach(w)};(pg.x||[]).forEach(w)});
+    const run=()=>{res.innerHTML="";const s=q.value.trim().toLowerCase();if(!s)return;const h=all.filter(([n,g])=>!s||n.toLowerCase().includes(s)||g.n.toLowerCase().includes(s)).slice(0,s?30:10);
+      if(!h.length){res.append(el("div","note","Nothing matches that. Try a page name like Combat."));return}
+      h.forEach(([n,g])=>{const r=el("div","rs");const t=build(T(n));const o=el("button","o",g.n+" &rsaquo;");o.onclick=()=>go(g.id);r.append(t,o);res.append(r)})};
+    q.oninput=run;run()}
+  if(p.id==="theme"){
+    const s=el("div","sws");TH.forEach((t,i)=>{const b=el("button",i===ti?"sel":"",`<span class="dot" style="background:linear-gradient(90deg,${t[1]},${t[2]},${t[3]})"></span>${t[0]}`);b.onclick=()=>{ti=i;const r=menu.style;r.setProperty("--a",t[1]);r.setProperty("--b",t[2]);r.setProperty("--c",t[3]);s.querySelectorAll("button").forEach((x,j)=>x.classList.toggle("sel",j===i));toast("Theme: "+t[0])};s.append(b)});
+    Bd.append(s,el("div","note","The theme recolours the whole menu. In game it also tints the animated aurora glow."));Bd.lastChild.style.cssText="margin-top:14px;max-width:640px"}
+  if(p.id==="cred"){
+    const l=el("div","list");[["Aphex","Zephron Developer"],["Niko","Created Source (Nitro)"],["Repeating","Aurora GUI (Radon - ImGui Templates)"]].forEach(([a,b])=>l.append(el("div","cr",`<span>${a}</span><span>${b}</span>`)));
+    l.append(el("div","note","Interface design: Aurora by Repeating."));Bd.append(l)}
+  if(p.id==="pl"){
+    const l=el("div","list");l.append(build(T("Pop Out",{on:1})),HR.k?el("hr"):"");const s=el("input","inp");s.placeholder="Search player...";s.setAttribute("aria-label","Search player");const c=el("input","inp");c.placeholder="Chat message...";c.value="hello";l.append(s,c,el("hr"));
+    const rows=el("div","list");l.append(rows);
+    const draw=()=>{rows.innerHTML="";PL.filter(n=>n.toLowerCase().includes(s.value.toLowerCase())).forEach((n,i)=>{const r=el("div","pr"+(i===0?" open":"")),b=el("button","",n);b.onclick=()=>r.classList.toggle("open");const a=el("div","acts");(n.includes("[YOU]")?ACT.filter(x=>x==="Promote"||x==="Chat"):ACT).forEach(x=>a.append(btn(x,1)));r.append(b,a);rows.append(r)});if(!rows.children.length)rows.append(el("div","cap","No players found..."))};
+    s.oninput=draw;draw();Bd.append(l)}
+  applyIf()}
+function render(){const p=P.find(x=>x.id===cur);main.innerHTML=`<div class="ph"><h2>${p.n}</h2><p>${p.d}</p></div><div id="body"></div>`;page(p)}
+function go(id){cur=id;nav.querySelectorAll("button").forEach(b=>{const on=b.dataset.id===id;b.classList.toggle("on",on);b.setAttribute("aria-selected",on)});render();main.scrollTop=0}
+P.forEach(p=>{const b=el("button","",`<i>${p.i}</i>${p.n}`);b.dataset.id=p.id;b.setAttribute("role","tab");b.onclick=()=>go(p.id);nav.append(b)});
+go("combat");
+</script>
 </body>
 </html>
